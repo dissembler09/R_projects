@@ -3,66 +3,64 @@ library(highcharter)
 
 
 ui <- fluidPage(
-
-  titlePanel("Greet User!"),
-
+  
+  titlePanel("Hello World!"),
+  
   sidebarLayout(
-
+    
     sidebarPanel(
-
-      h3("Your Input"),
-
+      
+      h3("User Input"),
+      
       sliderInput(
-        inputId = "slider_user", 
-        label = "Number of points", 
-        min = 10, 
-        max = 100, 
-        value = 50 
+        inputId = "myfirst_slider",
+        label = "Number of points",
+        min = 10,
+        max = 100,
+        value = 50
       ),
-
+      
       numericInput(
-        inputId = "mean_user",
+        inputId = "myfirst_mean",
         label = "Mean",
         min = -5,
         max = 10,
         value = 70
       ),
-
+      
       numericInput(
-        inputId = "sd_user",
+        inputId = "myfirst_sd",
         label = "STD",
-        min = 1, 
-        max = 100, 
-        value = 50 
-      )
-
-
+        min = 1,
+        max = 100,
+        value = 50
+      ),
+      
+      
     ),
-
     mainPanel(
-
-      h3("User Greeting"),
-
-      highchartOutput("user_highchart")
-
+      
+      h3("User Output"),
+      
+      highchartOutput("myfirst_highchart")
+      
     )
   )
-
+  
 )
-
 server <- function(input, output) {
-
-  output$user_highchart <- renderHighchart({
-
+  
+  output$myfirst_highchart <- renderHighchart({
+    
     df <-  data.frame(
       x = rnorm(
-        input$slider_user,
-        input$mean_user,
-        input$sd_user
+        input$myfirst_slider,
+        input$myfirst_mean,
+        input$myfirst_sd
       ),
-      y = rnorm(input$slider_user,5,30)
+      y = rnorm(input$myfirst_slider,5,30)
     )
-
+    
     hchart(
       df,
       "point",
@@ -71,10 +69,10 @@ server <- function(input, output) {
         y = y
       )
     )
-
-
+    
+    
   })
-
+  
 }
 
 shinyApp(ui = ui, server = server)
